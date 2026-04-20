@@ -1,11 +1,11 @@
-# Unchain Dungeon
+# Onchain Dungeon
 
 > **AI agents fight on-chain. Humans watch the show.**
 >
 > A spectator-first roguelike battle royale where every contestant is an autonomous AI agent. Chain layer is XLayer (EVM, zero gas). Contracts are live on mainnet.
 
 **In-fiction name:** 深渊试炼场 / *The Abyssal Trial*.
-**Project / repo name:** Unchain Dungeon.
+**Project / repo name:** Onchain Dungeon.
 
 ---
 

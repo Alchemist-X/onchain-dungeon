@@ -3,14 +3,14 @@ pragma solidity ^0.8.24;
 
 import {Test} from "forge-std/Test.sol";
 import {AdventurerNFT} from "../src/AdventurerNFT.sol";
-import {UnchainArena} from "../src/UnchainArena.sol";
+import {OnchainArena} from "../src/OnchainArena.sol";
 import {MockUSDC} from "./MockUSDC.sol";
 
-/// @dev Smoke coverage for URC-v1. Not exhaustive — focus is on the happy path
+/// @dev Smoke coverage for ORC-v1. Not exhaustive — focus is on the happy path
 ///      (register, start, act, resolveRound) + access-control reverts.
-contract UnchainArenaTest is Test {
+contract OnchainArenaTest is Test {
     AdventurerNFT nft;
-    UnchainArena arena;
+    OnchainArena arena;
     MockUSDC usdc;
     address treasury = address(0xBEEF);
     address operator = address(this);
@@ -21,7 +21,7 @@ contract UnchainArenaTest is Test {
     function setUp() public {
         usdc = new MockUSDC();
         nft = new AdventurerNFT(address(usdc), treasury, address(this));
-        arena = new UnchainArena(address(usdc), address(nft), address(this));
+        arena = new OnchainArena(address(usdc), address(nft), address(this));
         nft.setArena(address(arena));
         nft.setPaymentsEnabled(false);
 
@@ -57,7 +57,7 @@ contract UnchainArenaTest is Test {
         (uint256 matchId, bytes32 seed) = _openMatch();
         vm.warp(block.timestamp + 61);
         arena.startMatch(matchId, seed, 100e6);
-        assertEq(arena.tablesAtStage(matchId, UnchainArena.Stage.Quarterfinal), N / 4);
+        assertEq(arena.tablesAtStage(matchId, OnchainArena.Stage.Quarterfinal), N / 4);
         for (uint256 i = 0; i < N; i++) {
             assertTrue(arena.aliveOf(matchId, tokenIds[i]));
             assertGe(arena.hpOf(matchId, tokenIds[i]), 43);
@@ -79,14 +79,14 @@ contract UnchainArenaTest is Test {
         uint256 a = tokenIds[0];
         // find a target at the same table as tokenIds[0]
         uint256 table = arena.tableOf(matchId, a);
-        uint256[] memory mates = arena.tableOfAt(matchId, UnchainArena.Stage.Quarterfinal, table);
+        uint256[] memory mates = arena.tableOfAt(matchId, OnchainArena.Stage.Quarterfinal, table);
         uint256 target = mates[0] == a ? mates[1] : mates[0];
 
         vm.prank(nft.ownerOf(a));
-        arena.act(matchId, a, UnchainArena.ActionKind.Attack, target);
+        arena.act(matchId, a, OnchainArena.ActionKind.Attack, target);
         assertTrue(arena.actedInRound(matchId, 0, a));
-        (UnchainArena.ActionKind kind, uint256 recordedTgt) = arena.actionOf(matchId, 0, a);
-        assertEq(uint8(kind), uint8(UnchainArena.ActionKind.Attack));
+        (OnchainArena.ActionKind kind, uint256 recordedTgt) = arena.actionOf(matchId, 0, a);
+        assertEq(uint8(kind), uint8(OnchainArena.ActionKind.Attack));
         assertEq(recordedTgt, target);
     }
 
@@ -97,14 +97,14 @@ contract UnchainArenaTest is Test {
 
         uint256 a = tokenIds[0];
         uint256 table = arena.tableOf(matchId, a);
-        uint256[] memory mates = arena.tableOfAt(matchId, UnchainArena.Stage.Quarterfinal, table);
+        uint256[] memory mates = arena.tableOfAt(matchId, OnchainArena.Stage.Quarterfinal, table);
         uint256 target = mates[0] == a ? mates[1] : mates[0];
 
         vm.prank(nft.ownerOf(a));
-        arena.act(matchId, a, UnchainArena.ActionKind.Wait, 0);
+        arena.act(matchId, a, OnchainArena.ActionKind.Wait, 0);
         vm.prank(nft.ownerOf(a));
         vm.expectRevert(bytes("already acted"));
-        arena.act(matchId, a, UnchainArena.ActionKind.Attack, target);
+        arena.act(matchId, a, OnchainArena.ActionKind.Attack, target);
     }
 
     function test_resolveRound_advancesClock() public {

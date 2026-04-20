@@ -1,4 +1,4 @@
-# Unchain Round-Clock Protocol (URC-v1)
+# Onchain Round-Clock Protocol (ORC-v1)
 
 > The on-chain battle protocol replacing `BattleArena.settle()`.
 > Design goal: **no trusted operator**; all fights decided by on-chain dice rolls from actions submitted by each player's agent within a fixed time window.
@@ -177,7 +177,7 @@ Later rounds have fewer combatants → progressively cheaper.
 
 ## What this replaces
 
-`BattleArena.settle()` with its all-in-one `Settlement` struct (champion, runnerUp, fourth/eighth, slainIds, killerIds, killCounts, restedIds) is **deprecated**. The current deployed contract at `0x7E1bEafA4528BD781823F462475E0F349685C6b5` stays live until URC-v1 is deployed; after that, it becomes read-only history.
+`BattleArena.settle()` with its all-in-one `Settlement` struct (champion, runnerUp, fourth/eighth, slainIds, killerIds, killCounts, restedIds) is **deprecated**. The current deployed contract at `0x7E1bEafA4528BD781823F462475E0F349685C6b5` stays live until ORC-v1 is deployed; after that, it becomes read-only history.
 
 No central operator is needed for combat decisions. The operator role is reduced to:
 - Creating matches (`createMatch`)
@@ -188,6 +188,6 @@ No central operator is needed for combat decisions. The operator role is reduced
 
 ## Open questions for V1 implementation
 
-1. **Rest-streak mechanic** — current design increments rest for tokens that are alive but didn't register. In URC-v1, should this still be tracked? (Leaning yes; call `NFT.markRested` at `startMatch` for alive tokens not in entrants.)
+1. **Rest-streak mechanic** — current design increments rest for tokens that are alive but didn't register. In ORC-v1, should this still be tracked? (Leaning yes; call `NFT.markRested` at `startMatch` for alive tokens not in entrants.)
 2. **Cancellation** — if fewer than 16 register by `registrationEnd`, `cancelMatch()` refunds base pool. Same as today.
 3. **Observer node** — the live-stream site needs to replay a match. All inputs (seed, every `act`, every `resolveRound` with its prevrandao) are on-chain logs, so the replayer just rehydrates from events. No extra on-chain work needed.

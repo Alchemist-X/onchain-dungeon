@@ -17,12 +17,12 @@ interface IAdventurer {
     );
 }
 
-/// @title Unchain Arena — Round-Clock Protocol (URC-v1)
+/// @title Onchain Arena — Round-Clock Protocol (ORC-v1)
 /// @notice Trustless on-chain 32-person tournament. Each living combatant's
 ///         agent submits one action per 30-second window. After the window,
 ///         anyone calls resolveRound() which applies actions with on-chain dice.
 ///         Replaces the operator-settled BattleArena.
-contract UnchainArena is Ownable {
+contract OnchainArena is Ownable {
     using SafeERC20 for IERC20;
 
     uint256 public constant ROUND_WINDOW = 30 seconds;
