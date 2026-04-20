@@ -1,0 +1,20 @@
+node_modules/
+.DS_Store
+*.log
+
+# Foundry
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+contracts/lib/
+contracts/deploy-artifacts/*.hex
+
+# Env / secrets
+.env
+.env.*
+*.key
+*.keystore
+
+# IDE
+.vscode/
+.idea/

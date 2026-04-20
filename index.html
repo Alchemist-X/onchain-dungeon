@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unchain Dungeon · 深渊试炼场 MVP 原型</title>
+    <meta
+      name="description"
+      content="Unchain Dungeon · 基于 GDD-V1 的零依赖浏览器原型，覆盖雇佣、强化、Prompt 模板、报名、淘汰战与结算。"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero panel">
+        <div>
+          <p class="eyebrow">The Abyssal Trial · Local MVP</p>
+          <h1>深渊试炼场</h1>
+          <p class="hero-copy">
+            一个根据 <code>GDD-V1.md</code> 制作的最基础浏览器原型。先验证主循环：
+            雇佣冒险者、写策略、决定参战与休息、跑完一场 32 人试炼并结算收益。
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button type="button" class="button button-primary" data-action="mint">
+            雇佣冒险者 · 5 USDC
+          </button>
+          <button type="button" class="button" data-action="run-cycle">
+            运行下一场试炼
+          </button>
+          <button type="button" class="button button-danger" data-action="reset">
+            重置存档
+          </button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="stack">
+          <div class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">运营面板</p>
+                <h2>总览</h2>
+              </div>
+            </div>
+            <div id="summary-grid" class="summary-grid" aria-live="polite"></div>
+          </div>
+
+          <div class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">核心规则</p>
+                <h2>最小闭环</h2>
+              </div>
+            </div>
+            <ul class="rule-list">
+              <li>雇佣 5 USDC（3 进 Vault）· 强化 2 USDC / +1 点（全额进 Vault）。</li>
+              <li>每场 32 人 · 4 人桌 FFA 淘汰 · 奖池按 50% / 20% / 10% / 2.5% 分。</li>
+              <li>连休 7 场 → 吞噬销毁；主动退休 → Vault 90% 返还。</li>
+              <li>本地模拟，不连钱包 · 不上链 · 无 8 小时排程。</li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">我的队伍</p>
+                <h2>冒险者名册</h2>
+              </div>
+              <span id="roster-count" class="badge">0 / 0 活跃</span>
+            </div>
+            <div id="roster" class="roster" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <aside class="stack">
+          <div class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">预设策略</p>
+                <h2>Prompt 模板</h2>
+              </div>
+            </div>
+            <div class="preset-list">
+              <article class="preset-card">
+                <h3>激进</h3>
+                <p>优先压低血线，倾向主动出击，适合高 STR 或高 AGI 角色。</p>
+              </article>
+              <article class="preset-card">
+                <h3>平衡</h3>
+                <p>默认稳妥流派，优先攻击当前最容易击倒的目标。</p>
+              </article>
+              <article class="preset-card">
+                <h3>苟活</h3>
+                <p>第一回合尽量观望，低血量时更愿意防守，优先收尾残血目标。</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">最近结果</p>
+                <h2>战报</h2>
+              </div>
+            </div>
+            <div id="history" class="history" aria-live="polite"></div>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <template id="empty-roster-template">
+      <div class="empty-state">
+        <p>你还没有任何冒险者。</p>
+        <button type="button" class="button button-primary" data-action="mint">
+          雇佣第一个冒险者
+        </button>
+      </div>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+{
+  "network": "XLayer Mainnet",
+  "chainId": 196,
+  "rpc": "https://rpc.xlayer.tech",
+  "salt": "0x89201c97c402b410aeca364c69091e07692da92be566ba8ffea4ecf2d512cbaf",
+  "saltPreimage": "abyssal-v1",
+  "create2Factory": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+  "contracts": {
+    "AdventurerNFT": {
+      "address": "0x36122f13a0DDc901698AbAFC0b2AF8dae9f70d95",
+      "deployTx": "0x64a0ff172efe0afbe061ce1ba860de30cfa650ce81a6ce54c92d66ef22cd39d8",
+      "constructorArgs": {
+        "usdc": "0x74b7F16337b8972027F6196A17a631aC6dE26d22",
+        "platformTreasury": "0xb266dd8d835e3388d0eaf0bf7efff3bb732dfed6",
+        "owner": "0xb266dd8d835e3388d0eaf0bf7efff3bb732dfed6"
+      }
+    },
+    "BattleArena": {
+      "address": "0x7E1bEafA4528BD781823F462475E0F349685C6b5",
+      "deployTx": "0xd2fbbf066a66620271f1e9b86a227ef68bd63a1b21e4e3d19dff1cdb74f2747d",
+      "constructorArgs": {
+        "usdc": "0x74b7F16337b8972027F6196A17a631aC6dE26d22",
+        "nft": "0x36122f13a0DDc901698AbAFC0b2AF8dae9f70d95",
+        "owner": "0xb266dd8d835e3388d0eaf0bf7efff3bb732dfed6"
+      }
+    }
+  },
+  "postDeployTxs": [
+    {
+      "description": "NFT.setArena(arena)",
+      "txHash": "0xc04cdb8071b29f6f8652a7c998012df8c0d0dfc5e8c3f3b8c7eff072aaf16d78"
+    },
+    {
+      "description": "Smoke test: NFT.mint() (token #1)",
+      "txHash": "0xa387657be5eba4851d165cc90a079338e608b7fd92f1973ce941629ca682d63c"
+    }
+  ],
+  "settings": {
+    "owner": "0xb266dd8d835e3388d0eaf0bf7efff3bb732dfed6",
+    "operator": "0xb266dd8d835e3388d0eaf0bf7efff3bb732dfed6",
+    "platformTreasury": "0xb266dd8d835e3388d0eaf0bf7efff3bb732dfed6",
+    "usdc": "0x74b7F16337b8972027F6196A17a631aC6dE26d22",
+    "paymentsEnabled": false
+  }
+}
